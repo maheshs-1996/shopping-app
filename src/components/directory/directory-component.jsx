@@ -1,7 +1,7 @@
 import React from 'react';
 
 import MenuItem from '../menu-item/menu-item-component';
-import HOMEPAGE_DATA from '../../data/homepage_data'
+import HOMEPAGE_DATA from '../../assets/data/homepage_data'
 
 import './directory.scss';
 
