@@ -10,3 +10,6 @@ export const selectHiddenFlag = createSelector([selectCart], cart => cart.hidden
 
 export const selectCartCount = createSelector([selectCartItems],
     (cartItems) => cartItems.reduce((acm, item) => acm + item.quantity, 0))
+
+export const selectCartTotal = createSelector([selectCartItems],
+    (cartItems) => cartItems.reduce((acm, item) => acm + (item.quantity * item.price), 0))
