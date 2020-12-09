@@ -11,7 +11,7 @@ import { Route, Switch , Redirect} from 'react-router-dom'
 import { auth, createUserProfileDocument } from './firebase/firebase.utils'
 
 import {setCurrentUser} from './redux/user/user-actions'
-import {selectCurrentUser} from './redux/selectors'
+import {selectCurrentUser, selectCartCount} from './redux/selectors'
 import {connect} from 'react-redux'
 
 import './App.css';
@@ -53,7 +53,9 @@ class App extends Component {
           <Route exact path='/signin' render={() => (
             this.props.currentUser ? <Redirect to='/' /> : <LoginComponent/>
           )} />
-          <Route exact path='/checkout' component={CheckoutPage} />
+          <Route exact path='/checkout' render={() => (
+            this.props.count ? <CheckoutPage /> : <Homepage/>
+          )} />
         </Switch>
       </div>
     );
@@ -61,7 +63,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser : selectCurrentUser(state)
+  currentUser : selectCurrentUser(state),
+  count : selectCartCount(state)
 })
 
 const mapDispatchToProps = dispatch => ({
