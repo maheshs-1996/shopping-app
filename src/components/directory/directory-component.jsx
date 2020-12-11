@@ -1,30 +1,25 @@
 import React from 'react';
 
 import MenuItem from '../menu-item/menu-item-component';
-import HOMEPAGE_DATA from '../../assets/data/homepage_data'
+import {connect} from 'react-redux'
+import {selectDirectory} from '../../redux/selectors'
 
 import './directory.scss';
 
-class Directory extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      sections: HOMEPAGE_DATA
-    };
-  }
-
-  render() {
-    return (
-      <div className='directory-menu'>
+const Directory = ({sections}) => {
+  return (
+    <div className='directory-menu'>
       {
-          this.state.sections.map(({ id, ...otherProps}) => (
-              <MenuItem key={id} {...otherProps} />
-          ))
+        sections.map(({ id, ...otherProps }) => (
+          <MenuItem key={id} {...otherProps} />
+        ))
       }
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default Directory;
+const mapStateToProps = state => ({
+  sections : selectDirectory(state)
+})
+
+export default connect(mapStateToProps)(Directory);
