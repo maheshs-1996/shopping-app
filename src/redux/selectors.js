@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 export const selectCart = state => state.cart
 const selectUser = state => state.user
 export const selectDirectory = state => state.directory
-export const selectShop = state => state.shop
+export const selectShop = state => state.shop ? state.shop : []
 
 export const selectCollections = state => state.shop ? Object.values(state.shop) : []
 

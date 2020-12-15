@@ -7,19 +7,22 @@ import './category.scss'
 import { connect } from 'react-redux'
 
 const CategoryPage = ({ categoryItems }) => {
-    const { title, items } = categoryItems
-    return (
-        <div className="category">
-            <h1>{title}</h1>
-            <div className="category-items">
-                {
-                    items.map((item) => (
-                        <CollectionItem key={item.id} item={item} />
-                    ))
-                }
+    if(categoryItems){
+        const { title, items } = categoryItems
+        return (
+            <div className="category">
+                <h1>{title}</h1>
+                <div className="category-items">
+                    {
+                        items.map((item) => (
+                            <CollectionItem key={item.id} item={item} />
+                        ))
+                    }
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
+    return null
 }
 
 const mapStateToProps = (state, ownProps) => ({
