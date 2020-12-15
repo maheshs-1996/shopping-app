@@ -1,4 +1,3 @@
-
 const HOMEPAGE_DATA = [
     {
         title: 'hats',
