@@ -5,7 +5,7 @@ const selectUser = state => state.user
 export const selectDirectory = state => state.directory
 export const selectShop = state => state.shop
 
-export const selectCollections = state => Object.values(state.shop)
+export const selectCollections = state => state.shop ? Object.values(state.shop) : []
 
 export const selectCartItems = createSelector([selectCart], (cart) => cart.cartItems)
 
