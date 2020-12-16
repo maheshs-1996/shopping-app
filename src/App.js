@@ -54,7 +54,7 @@ class App extends Component {
             this.props.currentUser ? <Redirect to='/' /> : <LoginComponent/>
           )} />
           <Route exact path='/checkout' render={() => (
-            this.props.count ? <CheckoutPage /> : <Homepage/>
+            this.props.count ? <CheckoutPage /> : <Redirect to='/' />
           )} />
         </Switch>
       </div>
