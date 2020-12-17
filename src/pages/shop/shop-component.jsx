@@ -2,47 +2,44 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import CollectionOverview from '../../components/collection-overview/collection-overview-component'
 import CategoryPage from '../category/category-component'
-import { updateShopData } from '../../redux/shop/shop-actions'
+import {createStructuredSelector} from 'reselect'
+import { fetchCollectionStartAsync } from '../../redux/shop/shop-actions'
 import Loader from '../../components/loader/loader-component'
+import {selectIsFetching, selectIsCollectionsLoaded} from '../../redux/selectors'
 
 import { Route } from 'react-router-dom'
-import { convertCollectionsSnapshotToMap, firestore } from '../../firebase/firebase.utils';
 
  const CollectionOverviewWithLoader = Loader(CollectionOverview)
  const CategoryPageWithLoader = Loader(CategoryPage)
 class ShopPage extends Component {
-    unsubscribeFromSnapshot = null;
-    state = {
-        isLoading : true
-    }
 
     componentDidMount = () => {
-        const collectionRef = firestore.collection('collections')
-
-        this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
-            let collectionsMap = convertCollectionsSnapshotToMap(snapshot)
-            this.props.updateShopData(collectionsMap)
-            this.setState({isLoading : false})
-        })
+        const { fetchCollectionStartAsync } = this.props
+        fetchCollectionStartAsync()
     }
 
     render() {
-        const { match } = this.props
+        const { match, isFetching, isCollectionsLoaded } = this.props
         return (
             <div className="shop-page">
                 <Route exact path={`${match.path}`} render={(props) => (
-                    <CollectionOverviewWithLoader isLoading={this.state.isLoading} {...this.props} {...props} />
+                    <CollectionOverviewWithLoader isLoading={isFetching} {...this.props} {...props} />
                 )} />
                 <Route path={`${match.path}/:collectionName`} render={(props) => (
-                    <CategoryPageWithLoader isLoading={this.state.isLoading} {...this.props} {...props}/>
+                    <CategoryPageWithLoader isLoading={!isCollectionsLoaded} {...this.props} {...props}/>
                 )} />
             </div>
         )
     }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    updateShopData: (data) => dispatch(updateShopData(data))
+const mapStateToProps = createStructuredSelector({
+    isFetching : selectIsFetching,
+    isCollectionsLoaded : selectIsCollectionsLoaded
 })
 
-export default connect(null, mapDispatchToProps)(ShopPage)
+const mapDispatchToProps = (dispatch) => ({
+    fetchCollectionStartAsync: (data) => dispatch(fetchCollectionStartAsync(data))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShopPage)

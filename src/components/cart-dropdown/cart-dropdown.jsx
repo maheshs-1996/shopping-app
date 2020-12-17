@@ -2,8 +2,8 @@ import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import CartItem from '../cart-item/cart-item'
-import { selectCartItems } from '../../redux/selectors'
-import { toggleCartHidden } from '../../redux/cart/cart-actions'
+import { selectCartItems, selectCartCount } from '../../redux/selectors'
+import { toggleCartHidden, clearCart } from '../../redux/cart/cart-actions'
 
 import {
     CartDropdownContainer,
@@ -12,7 +12,7 @@ import {
     CartItemsContainer
 } from './cart-dropdown.styles';
 
-const CartDropdown = ({ cartItems, history, dispatch }) => (
+const CartDropdown = ({ cartItems, history, dispatch, cartCount }) => (
     <CartDropdownContainer>
         <CartItemsContainer>
             {cartItems.length ? (
@@ -23,19 +23,31 @@ const CartDropdown = ({ cartItems, history, dispatch }) => (
                     <EmptyMessageContainer>Your cart is empty</EmptyMessageContainer>
                 )}
         </CartItemsContainer>
-        <CartDropdownButton
-            onClick={() => {
-                history.push('/checkout');
-                dispatch(toggleCartHidden());
-            }}
-        >
-            GO TO CHECKOUT
-    </CartDropdownButton>
+        {
+            cartCount > 0 ? (
+                <>
+                    <CartDropdownButton
+                        onClick={() => {
+                            history.push('/checkout');
+                            dispatch(toggleCartHidden());
+                        }}
+                    >
+                        GO TO CHECKOUT
+                    </CartDropdownButton>
+
+                    <CartDropdownButton inverted onClick={() => {
+                        dispatch(clearCart())
+                    }}>CLEAR CART
+                    </CartDropdownButton>
+                </>
+            ) : null
+        }
     </CartDropdownContainer>
 );
 
 const mapStateToProps = state => ({
-    cartItems: selectCartItems(state)
+    cartItems: selectCartItems(state),
+    cartCount: selectCartCount(state)
 })
 
 export default withRouter(connect(mapStateToProps)(CartDropdown));

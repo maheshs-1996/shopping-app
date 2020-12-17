@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Homepage from './pages/homepage/homepage-component'
 import ShopPage from './pages/shop/shop-component'
 import CheckoutPage from './pages/checkout/checkout-component'
+import ContactUs from './pages/contact-us/contact-us-component'
 
 
 import Header from './components/header/header'
@@ -56,6 +57,7 @@ class App extends Component {
           <Route exact path='/checkout' render={() => (
             this.props.count ? <CheckoutPage /> : <Redirect to='/' />
           )} />
+          <Route path='/contact-us' component={ContactUs} />
         </Switch>
       </div>
     );

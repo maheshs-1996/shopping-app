@@ -16,3 +16,14 @@ export const decrementItem = item => ({
     type: 'DECREMENT_ITEM',
     payload: item
 });
+
+export const clearCartEvent = () => ({
+    type: 'CLEAR_CART'
+})
+
+export const clearCart = () => {
+    return dispatch  => {
+        dispatch(toggleCartHidden())
+        dispatch(clearCartEvent())
+    }
+}
