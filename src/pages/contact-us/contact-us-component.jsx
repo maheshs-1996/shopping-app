@@ -1,5 +1,5 @@
 import React from 'react'
-import { Emoji, MainContainer, MainText, RedirectHome, SubText } from './contact-us-styles'
+import { MainContainer, MainText, RedirectHome, SubText } from './contact-us-styles'
 import { createStructuredSelector} from 'reselect'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
@@ -11,7 +11,7 @@ const ContactUs = ({userName, history}) => {
             <MainText>Hi {userName}</MainText>
             <SubText>Thanks for stopping by. This is a dummy site</SubText>
             <SubText>Feel free to play around. Have a good day</SubText>
-            <Emoji role="img" aria-label="smiley" aria-labelledby="smiley">&#128522;</Emoji>
+            <span style={{fontSize:'100px'}} role="img" aria-label="smiley" aria-labelledby="smiley">&#128522;</span>
             <RedirectHome inverted onClick={() => history.push('/')}>Back to Home</RedirectHome>
         </MainContainer>
     )
