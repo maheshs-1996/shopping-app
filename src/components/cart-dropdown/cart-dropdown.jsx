@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import CartItem from '../cart-item/cart-item'
 import { selectCartItems, selectCartCount } from '../../redux/selectors'
-import { toggleCartHidden, clearCart } from '../../redux/cart/cart-actions'
+import { toggleCartHidden, clearCartAsync } from '../../redux/cart/cart-actions'
 
 import {
     CartDropdownContainer,
@@ -36,7 +36,7 @@ const CartDropdown = ({ cartItems, history, dispatch, cartCount }) => (
                     </CartDropdownButton>
 
                     <CartDropdownButton inverted onClick={() => {
-                        dispatch(clearCart())
+                        dispatch(clearCartAsync())
                     }}>CLEAR CART
                     </CartDropdownButton>
                 </>

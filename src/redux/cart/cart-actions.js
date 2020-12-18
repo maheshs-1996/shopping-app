@@ -21,9 +21,6 @@ export const clearCartEvent = () => ({
     type: 'CLEAR_CART'
 })
 
-export const clearCart = () => {
-    return dispatch  => {
-        dispatch(toggleCartHidden())
-        dispatch(clearCartEvent())
-    }
-}
+export const clearCartAsync = () => ({
+    type: 'CLEAR_CART_INITIATE'
+})
