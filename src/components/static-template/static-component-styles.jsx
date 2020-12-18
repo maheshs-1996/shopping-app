@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import CustomButton from '../../components/custom-button/custom-button'
+import CustomButton from '../custom-button/custom-button'
 
 export const MainContainer = styled.div`
     text-align: center;

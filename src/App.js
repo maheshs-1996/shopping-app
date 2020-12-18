@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Homepage from './pages/homepage/homepage-component'
 import ShopPage from './pages/shop/shop-component'
 import CheckoutPage from './pages/checkout/checkout-component'
-import ContactUs from './pages/contact-us/contact-us-component'
+import StaticTemplate from './components/static-template/static-component'
 
 
 import Header from './components/header/header'
@@ -57,7 +57,12 @@ class App extends Component {
           <Route exact path='/checkout' render={() => (
             this.props.count ? <CheckoutPage /> : <Redirect to='/' />
           )} />
-          <Route path='/contact-us' component={ContactUs} />
+          <Route path='/contact-us' render={props => (
+            <StaticTemplate {...props} mainText="Thanks for stopping by. This is a dummy site" subText="Feel free to play around. Have a good day" />
+          )} />
+          <Route path='/success' render={props => (
+            <StaticTemplate {...props} mainText="Order placed successfully." subText="This is a dummy site.Thanks for using Fashion Mart" />
+          )} />
         </Switch>
       </div>
     );
