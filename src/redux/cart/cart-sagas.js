@@ -1,5 +1,5 @@
-import {takeEvery, put} from 'redux-saga/effects'
-import {clearCartEvent, toggleCartHidden} from './cart-actions'
+import { takeEvery, put, all, call } from 'redux-saga/effects'
+import { clearCartEvent, toggleCartHidden } from './cart-actions'
 
 export function* clearCartAsync() {
     yield put(toggleCartHidden())
@@ -8,4 +8,10 @@ export function* clearCartAsync() {
 
 export function* clearCart() {
     yield takeEvery('CLEAR_CART_INITIATE', clearCartAsync)
+}
+
+export default function* cartSaga() {
+    yield all([
+        call(clearCart)
+    ])
 }

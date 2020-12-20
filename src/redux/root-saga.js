@@ -1,11 +1,13 @@
-import { all, fork } from "redux-saga/effects";
+import { all, call } from "redux-saga/effects";
 
-import { fetchCollectionsStart } from '../redux/shop/shop.sagas'
-import { clearCart } from '../redux/cart/cart-sagas'
+import shopSaga from './shop/shop.sagas'
+import cartSaga from './cart/cart-sagas'
+import userSaga from './user/user-sagas'
 
 export default function* () {
     yield all([
-        fork(fetchCollectionsStart),
-        fork(clearCart)
+        call(shopSaga),
+        call(cartSaga),
+        call(userSaga)
     ]);
 }

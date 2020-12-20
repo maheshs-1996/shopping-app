@@ -39,7 +39,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchCollectionStart: (data) => dispatch(fetchCollectionStart(data))
+    fetchCollectionStart: () => dispatch(fetchCollectionStart())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopPage)
