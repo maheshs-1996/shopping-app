@@ -21,6 +21,6 @@ export function* fetchCollectionsStart() {
 
 export default function* shopSaga() {
     yield all([
-        call(fetchCollectionsAsync)
+        call(fetchCollectionsStart)
     ])
 }

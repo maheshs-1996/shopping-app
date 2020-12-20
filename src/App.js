@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {  useEffect } from 'react';
 
 import Homepage from './pages/homepage/homepage-component'
 import ShopPage from './pages/shop/shop-component'
@@ -14,37 +14,34 @@ import { selectCurrentUser, selectCartCount } from './redux/selectors'
 import { connect } from 'react-redux'
 
 import './App.css';
-class App extends Component {
 
-  componentDidMount() {
-    const { checkUserSession } = this.props
+const App = ({ checkUserSession, currentUser, count }) => {
+
+  useEffect(() => {
     checkUserSession()
+  }, [checkUserSession])
 
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <Header />
-        <Switch>
-          <Route exact path='/' component={Homepage} />
-          <Route path='/shop' component={ShopPage} />
-          <Route exact path='/signin' render={() => (
-            this.props.currentUser ? <Redirect to='/' /> : <LoginComponent />
-          )} />
-          <Route exact path='/checkout' render={() => (
-            this.props.count ? <CheckoutPage /> : <Redirect to='/' />
-          )} />
-          <Route path='/contact-us' render={props => (
-            <StaticTemplate {...props} mainText="Thanks for stopping by. This is a dummy site" subText="Feel free to play around. Have a good day" />
-          )} />
-          <Route path='/success' render={props => (
-            <StaticTemplate {...props} mainText="Order placed successfully." subText="This is a dummy site.Thanks for using Fashion Mart" />
-          )} />
-        </Switch>
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      <Header />
+      <Switch>
+        <Route exact path='/' component={Homepage} />
+        <Route path='/shop' component={ShopPage} />
+        <Route exact path='/signin' render={() => (
+          currentUser ? <Redirect to='/' /> : <LoginComponent />
+        )} />
+        <Route exact path='/checkout' render={() => (
+          count ? <CheckoutPage /> : <Redirect to='/' />
+        )} />
+        <Route path='/contact-us' render={props => (
+          <StaticTemplate {...props} mainText="Thanks for stopping by. This is a dummy site" subText="Feel free to play around. Have a good day" />
+        )} />
+        <Route path='/success' render={props => (
+          <StaticTemplate {...props} mainText="Order placed successfully." subText="This is a dummy site.Thanks for using Fashion Mart" />
+        )} />
+      </Switch>
+    </div>
+  );
 }
 
 const mapStateToProps = state => ({
