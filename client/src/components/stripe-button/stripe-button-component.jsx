@@ -2,6 +2,7 @@ import React from 'react'
 import StripeCheckout from 'react-stripe-checkout'
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
+import axios from 'axios'
 
 import {clearCartEvent} from '../../redux/cart/cart-actions'
 
@@ -11,8 +12,22 @@ const StripeCheckoutButton = ({ price, history,clearCart }) =>  {
 
     const onSuccess = (token) => {
         console.log('token =>',token)
-        clearCart()
-        history.push('/success')
+        axios({
+            url : 'payment',
+            method : 'post',
+            data : {
+                amount : priceForStripe,
+                token
+            }
+        }).then((response) => {
+            console.log('response', response)
+            clearCart()
+            history.push('/success')
+        })
+        .catch((error) => {
+            console.log('error',error)
+            alert('Something went wrong')
+        })
     }
 
     return (
