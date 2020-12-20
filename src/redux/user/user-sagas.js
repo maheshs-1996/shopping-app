@@ -5,9 +5,9 @@ import { auth, googleProvider, createUserProfileDocument, getCurrentUser } from 
 import { signInFailure, signInSuccess, signoutFailure, signoutSuccess } from './user-actions'
 import { clearCartEvent } from '../cart/cart-actions'
 
-function* getSnapShotfromUserAuth(userAuth) {
+function* getSnapShotfromUserAuth(userAuth, additionalData={}) {
     try {
-        const userRef = yield call(createUserProfileDocument, userAuth)
+        const userRef = yield call(createUserProfileDocument, userAuth, additionalData)
         const userSnapshot = yield userRef.get()
         yield put(
             signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() })
@@ -88,11 +88,34 @@ export function* signoutStart() {
     )
 }
 
+export function* signUp({payload : {displayName, email, password, confirmPassword}}) {
+    try {
+        if(password !== confirmPassword){
+            alert('Passwords not matching')
+        }
+        else{
+            const {user} = yield auth.createUserWithEmailAndPassword(email, password)
+            yield getSnapShotfromUserAuth(user, {displayName})
+        }
+    }
+    catch (error) {
+        yield put(signoutFailure(error))
+    }
+}
+
+export function* onSignUpStart() {
+    yield takeLatest(
+        'SIGN_UP_START',
+        signUp
+    )
+}
+
 export default function* userSaga() {
     yield all([
         call(onGoogleSignInStart),
         call(onEmailSignInStart),
         call(checkUserSession),
-        call(signoutStart)
+        call(signoutStart),
+        call(onSignUpStart)
     ])
 }
