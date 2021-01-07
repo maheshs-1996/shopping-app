@@ -1,14 +1,17 @@
-import { put, call, takeEvery, all } from 'redux-saga/effects'
+import { put, call, takeEvery, all, delay} from 'redux-saga/effects'
 
-import { convertCollectionsSnapshotToMap, firestore } from '../../firebase/firebase.utils';
 import { fetchCollectionFailure, fetchCollectionSuccess } from './shop-actions'
+
+import SHOP_DATA from '../../data/shop_data'
 
 export function* fetchCollectionsAsync() {
     try {
-        const collectionRef = firestore.collection('collections')
-        const snapshot = yield collectionRef.get()
-        const collectionMap = yield call(convertCollectionsSnapshotToMap, snapshot)
-        yield put(fetchCollectionSuccess(collectionMap))
+        yield delay(2000);
+        let normalisedData =  SHOP_DATA.reduce((acc, collection) => {
+            acc[collection.title.toLowerCase()] = collection;
+            return acc
+        },{})
+        yield put(fetchCollectionSuccess(normalisedData))
     }
     catch (err) {
         yield put(fetchCollectionFailure(err.message))
