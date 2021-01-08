@@ -1,13 +1,13 @@
-import { put, call, takeEvery, all, delay} from 'redux-saga/effects'
+import { put, call, takeEvery, all} from 'redux-saga/effects'
 
 import { fetchCollectionFailure, fetchCollectionSuccess } from './shop-actions'
 
-import SHOP_DATA from '../../data/shop_data'
 
 export function* fetchCollectionsAsync() {
     try {
-        yield delay(2000);
-        let normalisedData =  SHOP_DATA.reduce((acc, collection) => {
+        const response = yield fetch('https://api.npoint.io/7e48940f3a0a0a6adb7d')
+        const json = yield response.json()
+        const normalisedData =  json.collections.reduce((acc, collection) => {
             acc[collection.title.toLowerCase()] = collection;
             return acc
         },{})
