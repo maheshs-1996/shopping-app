@@ -2,33 +2,43 @@ import React, { Component } from 'react';
 
 import MenuItem from '../menu-item/menu-item-component';
 import { connect } from 'react-redux'
-import { selectDirectory } from '../../redux/selectors'
+import { selectDirectory, selectIsFetchingHomepageData } from '../../redux/selectors'
 import { loadHomepageData } from '../../redux/data/data-actions'
 
 import './directory.scss';
-// ({ sections, loadHomepageData })
+import Loader from '../loader/loader-component'
+
+const DirectoryComponent = ({ sections }) => {
+  return (
+    <div className='directory-menu'>
+      {
+        sections && sections.length ? sections.map(({ id, ...otherProps }) => (
+          <MenuItem key={id} {...otherProps} />
+        )) : null
+      }
+    </div>
+  )
+}
+
+const DirectoryComponentWithLoader = Loader(DirectoryComponent)
+
 class Directory extends Component {
   componentDidMount() {
     this.props.loadHomepageData()
   }
 
   render() {
-    const { sections } = this.props
-    console.log('sections',sections)
+    const { props } = this
+    console.log("props.isFetching",props.isFetching)
     return (
-      <div className='directory-menu'>
-        {
-          sections && sections.length ? sections.map(({ id, ...otherProps }) => (
-            <MenuItem key={id} {...otherProps} />
-          )) : null
-        }
-      </div>
+      <DirectoryComponentWithLoader isLoading={props.isFetching} {...props} />
     );
   }
 }
 
 const mapStateToProps = state => ({
-  sections: selectDirectory(state)
+  sections: selectDirectory(state),
+  isFetching: selectIsFetchingHomepageData(state)
 })
 
 const mapDispatchToProps = dispatch => ({

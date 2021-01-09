@@ -2,7 +2,8 @@ import { createSelector } from 'reselect'
 
 export const selectCart = state => state.cart
 const selectUser = state => state.user
-export const selectDirectory = state => state && state.directory && state.directory.overview ? state.directory.overview : []
+export const selectDirectory = state => state.directory.overview 
+export const selectIsFetchingHomepageData = state => state.directory.isFetching
 export const selectShop = state => state.shop ? state.shop : {}
 
 export const selectCollections = state => state.shop && state.shop.collections ? Object.values(state.shop.collections) : []
