@@ -5,7 +5,6 @@ export function* loadHomepageData() {
     try {
         const response = yield fetch("https://api.npoint.io/fb0565833a2b6ae1a74f")
         const json = yield response.json()
-        console.log('json.overview',json.overview)
         yield put(setHomepageData(json.overview))
     }
     catch (error) {

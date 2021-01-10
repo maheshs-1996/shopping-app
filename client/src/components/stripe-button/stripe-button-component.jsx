@@ -11,7 +11,6 @@ const StripeCheckoutButton = ({ price, history,clearCart }) =>  {
     const key = 'pk_test_51Hx6k3B4PueS7v9kEeErXss1B5R3mZCu1mnGWr7kxdHPTaY7GJw1qrrgzVVZ2EKPSdsxAMOItLqRekkE8ifHBxr100lWI5v2H1'
 
     const onSuccess = (token) => {
-        console.log('token =>',token)
         axios({
             url : 'payment',
             method : 'post',
@@ -20,7 +19,6 @@ const StripeCheckoutButton = ({ price, history,clearCart }) =>  {
                 token
             }
         }).then((response) => {
-            console.log('response', response)
             clearCart()
             history.push('/success')
         })

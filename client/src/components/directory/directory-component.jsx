@@ -29,7 +29,6 @@ class Directory extends Component {
 
   render() {
     const { props } = this
-    console.log("props.isFetching",props.isFetching)
     return (
       <DirectoryComponentWithLoader isLoading={props.isFetching} {...props} />
     );
