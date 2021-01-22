@@ -5,12 +5,12 @@ import { decrementItem, addItem } from '../../redux/cart/cart-actions'
 import { Quantity, Value, Icon } from './plus-and-minus_styles'
 
 const PlusAndMinusComponent = (props) => {
-    const { decrementItem, addItem, cartItem } = props
+    const { decrementItem, addItem, cartItem, cartCard } = props
     const { quantity } = cartItem
     return (
-        <Quantity>
+        <Quantity cartCard={cartCard}>
             <Icon onClick={() => decrementItem(cartItem)}>&#10094;</Icon>
-            <Value>{quantity}</Value>
+            <Value>{quantity || 1}</Value>
             <Icon onClick={() => addItem(cartItem)}>&#10095;</Icon>
         </Quantity>
     )

@@ -7,13 +7,16 @@ import {
   AddButton,
   BackgroundImage,
   NameContainer,
-  PriceContainer
+  PriceContainer,
+  CartButton
 } from './collection-item-styles';
 
 import { addItem } from '../../redux/cart/cart-actions';
+import PlusAndMinusComponent from '../plus-and-minus/plus-and-minus_component'
 
-const CollectionItem = ({ item, addItem }) => {
-  const { name, price, imageUrl } = item;
+const CollectionItem = (props) => {
+  const { item, addItem } = props
+  const { name, price, imageUrl, quantity } = item;
   return (
     <CollectionItemContainer>
       <BackgroundImage className='image' imageUrl={imageUrl} />
@@ -21,9 +24,10 @@ const CollectionItem = ({ item, addItem }) => {
         <NameContainer>{name}</NameContainer>
         <PriceContainer>${price}</PriceContainer>
       </CollectionFooterContainer>
-      <AddButton onClick={() => addItem(item)} inverted>
-        Add to cart
-      </AddButton>
+      <CartButton>
+        <AddButton onClick={() => addItem(item)} inverted> Add to cart</AddButton>
+        <PlusAndMinusComponent {...props} cartItem={item} cartCard />
+      </CartButton>
     </CollectionItemContainer>
   )
 };

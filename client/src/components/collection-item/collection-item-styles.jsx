@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 import CustomButton from '../custom-button/custom-button';
 
+export const CartButton = styled.div`
+  opacity: 0.7;
+  position: absolute;
+  top: 255px;
+  display: none;
+  width: 80%;
+`
+
 export const CollectionItemContainer = styled.div`
   width: 21vw;
   display: flex;
@@ -12,19 +20,15 @@ export const CollectionItemContainer = styled.div`
     .image {
       opacity: 0.8;
     }
-    button {
+    ${CartButton} {
       opacity: 0.85;
       display: flex;
+      flex-direction:column;
     }
   }
 `;
 
 export const AddButton = styled(CustomButton)`
-  width: 80%;
-  opacity: 0.7;
-  position: absolute;
-  top: 255px;
-  display: none;
 `;
 
 export const BackgroundImage = styled.div`
